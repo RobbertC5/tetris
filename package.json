@@ -1,0 +1,14 @@
+{
+  "name": "tetris",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robbert Camps",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}

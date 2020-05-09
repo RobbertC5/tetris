@@ -210,7 +210,9 @@ export class Game {
         break;
       case "ArrowUp":
         const rotations = pieces[this.currentPiece].length;
-        this.currentRotation = (this.currentRotation+1)%rotations; // TODO: checkfree
+        if(this.checkFree(0,0,1)){
+          this.currentRotation = (this.currentRotation+1)%rotations; // TODO: checkfree
+        }
         e.preventDefault();
         e.stopPropagation();
         break;
@@ -233,7 +235,9 @@ export class Game {
   }
 
   checkFree(x: number, y: number, rot: number){
-    const piece = pieces[this.currentPiece][this.currentRotation];
+    const rotations = pieces[this.currentPiece].length;
+    const checkRot = (this.currentRotation+rot+rotations)%rotations;
+    const piece = pieces[this.currentPiece][checkRot];
     const checkLoc = {x: this.pieceLocation.x+x, y: this.pieceLocation.y+y};
     for (let i = 0; i < piece.length; i++){
       for (let j = 0; j < piece[0].length; j++){

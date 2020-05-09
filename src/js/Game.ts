@@ -2,99 +2,100 @@ const pieces = [
   // I piece
   [
     // Rotation 1
+    [[0,0,1,0],
+     [0,0,1,0],
+     [0,0,1,0],
+     [0,0,1,0,]],
+    // Rotation 2
     [[0,0,0,0],
      [0,0,0,0],
      [1,1,1,1],
-     [0,0,0,0,]],
-    // Rotation 2
-     [[0,0,1,0],
-      [0,0,1,0],
-      [0,0,1,0],
-      [0,0,1,0,]]
+     [0,0,0,0,]]
   ],
   // J piece
   [
     // Rotation 1
-    [[1,0,0],
-     [1,1,1],
-     [0,0,0]],
-    // Rotation 2
-     [[0,1,1],
-      [0,1,0],
-      [0,1,0]],
-    // Rotation 3
-    [[0,0,0],
-     [1,1,1],
-     [0,0,1]],
-    // Rotation 2
     [[0,1,0],
      [0,1,0],
-     [1,1,0]],
+     [0,1,1]],
+    // Rotation 2
+    [[0,0,1],
+     [1,1,1],
+     [0,0,0]],
+    // Rotation 3
+    [[1,1,0],
+     [0,1,0],
+     [0,1,0]],
+    // Rotation 4
+    [[0,0,0],
+     [1,1,1],
+     [1,0,0]],
   ],
   // L piece
   [
     // Rotation 1
-    [[0,0,0],
-     [1,1,1],
-     [1,0,0]],
+    [[0,1,1],
+     [0,1,0],
+     [0,1,0]],
     // Rotation 2
-     [[1,1,0],
-      [0,1,0],
-      [0,1,0]],
-    // Rotation 3
-    [[0,0,1],
+    [[1,0,0],
      [1,1,1],
      [0,0,0]],
-    // Rotation 2
+    // Rotation 3
     [[0,1,0],
      [0,1,0],
-     [0,1,1]],
+     [1,1,0]],
+    // Rotation 4
+    [[0,0,0],
+     [1,1,1],
+     [0,0,1]],
   ],
   // O piece
   [
-    [[1,1],
-     [1,1]],
+    [[0,0,0],
+     [0,1,1],
+     [0,1,1]],
   ],
   // S piece
   [
     // Rotation 1
-    [[0,1,1],
-     [1,1,0],
-     [0,0,0]],
+    [[0,0,1],
+     [0,1,1],
+     [0,1,0]],
     // Rotation 2
-     [[0,1,0],
-      [0,1,1],
-      [0,0,1]],
+    [[1,1,0],
+     [0,1,1],
+     [0,0,0]],
   ],
   // Z piece
   [
     // Rotation 1
-    [[1,1,0],
+    [[0,1,0],
      [0,1,1],
-     [0,0,0]],
+     [0,0,1]],
     // Rotation 2
-     [[0,0,1],
-      [0,1,1],
-      [0,1,0]],
+    [[0,1,1],
+     [1,1,0],
+     [0,0,0]],
   ],
   // T piece
   [
     // Rotation 1
     [[0,1,0],
+     [0,1,1],
+     [0,1,0]],
+    // Rotation 2
+    [[0,1,0],
      [1,1,1],
      [0,0,0]],
-     // Rotation 2
-     [[0,1,0],
-      [0,1,1],
-      [0,1,0]],
-      // Rotation 3
-      [[0,0,0],
-       [1,1,1],
-       [0,1,0]],
-       // Rotation 4
-       [[0,1,0],
-        [1,1,0],
-        [0,1,0]],
+    // Rotation 3
+    [[0,1,0],
+     [1,1,0],
+     [0,1,0]],
+    // Rotation 4
+    [[0,0,0],
+     [1,1,1],
+     [0,1,0]],
   ],
 ]
 
@@ -153,7 +154,7 @@ export class Game {
     this.currentPiece = this.nextPiece;
     this.nextPiece = Math.floor(Math.random()*pieces.length);
     this.currentRotation = 0;
-    this.pieceLocation = {x: 4, y: 1};
+    this.pieceLocation = {x: 4, y: 0};
   }
 
   savePiece(){
@@ -226,7 +227,7 @@ export class Game {
       case "ArrowUp":
         const rotations = pieces[this.currentPiece].length;
         if(this.checkFree(0,0,1)){
-          this.currentRotation = (this.currentRotation+1)%rotations; // TODO: checkfree
+          this.currentRotation = (this.currentRotation+1)%rotations;
         }
         e.preventDefault();
         e.stopPropagation();

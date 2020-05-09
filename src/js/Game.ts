@@ -235,7 +235,6 @@ export class Game {
       default:
         break;
     }
-    console.log(e.key);
   }
   
   handleKeyUp(e: KeyboardEvent){

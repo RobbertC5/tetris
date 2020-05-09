@@ -98,6 +98,16 @@ const pieces = [
   ],
 ]
 
+const colors = [
+  '#42e0f5',
+  '#4242f5',
+  '#f5b942',
+  '#f5e942',
+  '#57f542',
+  '#f54242',
+  '#bf42f5'
+]
+
 export class Game {
 
   canvas: HTMLCanvasElement;
@@ -105,17 +115,21 @@ export class Game {
   currentPiece: number;
   currentRotation: number;
   pieceLocation: {x: number, y:number};
+  nextPiece: number;
   time: number;
   keyDownHeld: boolean;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
     this.initGrid();
+    this.currentPiece = Math.floor(Math.random()*pieces.length);
+    this.nextPiece = Math.floor(Math.random()*pieces.length);
     this.spawnPiece();
     this.draw();
     setInterval(this.step.bind(this),1000/60);
     this.time = 0;
     this.keyDownHeld = false;
+
 
     document.addEventListener('keydown',this.handleKeyDown.bind(this));
     document.addEventListener('keyup',this.handleKeyUp.bind(this));
@@ -136,8 +150,9 @@ export class Game {
   }
 
   spawnPiece(){
-    this.currentPiece = Math.floor(Math.random()*pieces.length);
-    this.currentRotation = Math.floor(Math.random()*pieces[this.currentPiece].length);
+    this.currentPiece = this.nextPiece;
+    this.nextPiece = Math.floor(Math.random()*pieces.length);
+    this.currentRotation = 0;
     this.pieceLocation = {x: 4, y: 1};
   }
 
@@ -146,7 +161,7 @@ export class Game {
     for (let i = 0; i < piece.length; i++){
       for (let j = 0; j < piece[0].length; j++){
         if (piece[i][j]==1){
-          this.grid[this.pieceLocation.x+i][this.pieceLocation.y+j] = 2;
+          this.grid[this.pieceLocation.x+i][this.pieceLocation.y+j] = 2+this.currentPiece;
         }
       }
     }
@@ -270,7 +285,7 @@ export class Game {
           ctx.strokeStyle = "#000000";
           ctx.fillRect(x*g,y*g,g,g);
         }else{
-          ctx.fillStyle = "#fcdf03";
+          ctx.fillStyle = colors[this.grid[x][y]-2];
           ctx.strokeStyle = "#333333";
           ctx.fillRect(x*g,y*g,g,g);
           ctx.strokeRect(x*g,y*g,g,g);
@@ -283,10 +298,41 @@ export class Game {
     for (let i = 0; i < piece.length; i++){
       for (let j = 0; j < piece[0].length; j++){
         if (piece[i][j]==1){
-          ctx.fillStyle = "#fcdf03";
+          ctx.fillStyle = colors[this.currentPiece];
           ctx.strokeStyle = "#333333";
           ctx.fillRect((this.pieceLocation.x+i)*g,(this.pieceLocation.y+j)*g,g,g);
           ctx.strokeRect((this.pieceLocation.x+i)*g,(this.pieceLocation.y+j)*g,g,g);
+        }
+      }
+    }
+
+
+    // draw grid for next piece
+    for (let x = 14; x < 20; x++) {
+      for (let y = 4; y < 10; y++) {
+        ctx.strokeRect(x*g,y*g,g,g);
+        if(x == 14 || x == 19 || y == 4 || y == 9){
+          ctx.fillStyle = "#555555";
+          ctx.strokeStyle = "#000000";
+          ctx.fillRect(x*g,y*g,g,g);
+        }else{
+          ctx.fillStyle = "#999999";
+          ctx.strokeStyle = "#000000";
+          ctx.fillRect(x*g,y*g,g,g);
+        }
+      }
+    }
+
+    // draw the next piece
+    const nextPiece = pieces[this.nextPiece][0];
+    const nextLoc = {x: 15, y: 5};
+    for (let i = 0; i < nextPiece.length; i++){
+      for (let j = 0; j < nextPiece[0].length; j++){
+        if (nextPiece[i][j]==1){
+          ctx.fillStyle = colors[this.nextPiece];
+          ctx.strokeStyle = "#333333";
+          ctx.fillRect((nextLoc.x+i)*g,(nextLoc.y+j)*g,g,g);
+          ctx.strokeRect((nextLoc.x+i)*g,(nextLoc.y+j)*g,g,g);
         }
       }
     }

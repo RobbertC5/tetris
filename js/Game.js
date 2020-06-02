@@ -63,9 +63,9 @@ const pieces = [
             [0, 1, 1],
             [0, 1, 0]],
         // Rotation 2
-        [[1, 1, 0],
-            [0, 1, 1],
-            [0, 0, 0]],
+        [[0, 0, 0],
+            [1, 1, 0],
+            [0, 1, 1]],
     ],
     // Z piece
     [
@@ -74,9 +74,9 @@ const pieces = [
             [0, 1, 1],
             [0, 0, 1]],
         // Rotation 2
-        [[0, 1, 1],
-            [1, 1, 0],
-            [0, 0, 0]],
+        [[0, 0, 0],
+            [0, 1, 1],
+            [1, 1, 0]],
     ],
     // T piece
     [
@@ -217,7 +217,6 @@ export class Game {
             default:
                 break;
         }
-        console.log(e.key);
     }
     handleKeyUp(e) {
         switch (e.key) {

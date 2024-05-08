@@ -11,7 +11,7 @@
   "author": "Robbert Camps",
   "license": "UNLICENSED",
   "devDependencies": {
-    "gh-pages": "^2.2.0",
+    "gh-pages": "^5.0.0",
     "typescript": "^3.8.3"
   }
 }
